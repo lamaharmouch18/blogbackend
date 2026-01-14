@@ -9,6 +9,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "../frontend/public/upload");
@@ -32,5 +33,5 @@ app.use("/api/posts", postRoutes);
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log("Server running on port", PORT);
 });
