@@ -1,18 +1,20 @@
 import express from "express";
-import {
-  addPost,
-  deletePost,
-  getPost,
-  getPosts,
-  updatePost,
-} from "../controller/post.js";
+import { db } from "../db.js";
 
 const router = express.Router();
 
-router.get("/", getPosts);
-router.get("/:id", getPost);
-router.post("/", addPost);
-router.delete("/:id", deletePost);
-router.put("/:id", updatePost);
+router.get("/", (req, res) => {
+  // 🔥 NO DB? RETURN EMPTY ARRAY
+  if (!db) return res.json([]);
+
+  const q = req.query.cat
+    ? "SELECT * FROM posts WHERE cat=?"
+    : "SELECT * FROM posts";
+
+  db.query(q, req.query.cat ? [req.query.cat] : [], (err, data) => {
+    if (err) return res.status(500).json(err);
+    res.json(data);
+  });
+});
 
 export default router;

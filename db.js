@@ -1,10 +1,14 @@
 import mysql from "mysql";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 let db = null;
 
 if (
   process.env.MYSQLHOST &&
   process.env.MYSQLUSER &&
+  process.env.MYSQLPASSWORD &&
   process.env.MYSQL_DATABASE
 ) {
   db = mysql.createConnection({
@@ -17,13 +21,14 @@ if (
 
   db.connect((err) => {
     if (err) {
-      console.error("DB connection failed:", err.message);
+      console.log("❌ MySQL connection failed");
+      db = null;
     } else {
-      console.log("MySQL connected");
+      console.log("✅ MySQL connected");
     }
   });
 } else {
-  console.log("⚠️ MySQL env vars missing — DB not connected (OK for deploy)");
+  console.log("⚠️ MySQL env vars missing — DB disabled");
 }
 
 export { db };

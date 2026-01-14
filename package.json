@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "type": "module",
+ 
   "scripts": {
-    "start": "npm run start"
-  },
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  }, 
   "keywords": [],
   "author": "",
   "license": "ISC",
